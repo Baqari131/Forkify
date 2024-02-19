@@ -80,7 +80,6 @@ const renderButton = (page, numResults, resPerPage) => {
         button = createButton(page,"prev")
 
     }
-    console.log(button);
     elements.searchResPage.insertAdjacentHTML("afterbegin", button);
 }
 
