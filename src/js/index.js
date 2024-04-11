@@ -14,6 +14,7 @@ import * as recipeView from "./views/recipeView"
 */
 
 const state = {};
+window.state = state;
 
 const controlSearch = async (e) =>{
     e.preventDefault();
@@ -52,6 +53,8 @@ const controlRecipe = async () =>{
     const id = window.location.hash.replace("#","");
     if (id){
 
+        if (state.search) searchView.highlitedSelected(id);
+
         recipeView.clearRecipe();
         renderLoader(elements.recipe);
 
@@ -60,11 +63,36 @@ const controlRecipe = async () =>{
         await state.recipe.getRecipe();
         state.recipe.calcTime();
         state.recipe.calcServings();
+        state.recipe.parseIngredients();
         
-        clearLoader();
+        clearLoader()
 
         recipeView.renderRecipe(state.recipe);
     }
 }
 
 window.addEventListener("hashchange", controlRecipe);
+
+window.addEventListener("load", controlRecipe);
+
+
+elements.recipe.addEventListener("click", e =>{
+    if(e.target.matches(".btn-dec, .btn-dec *")){
+        //decrease
+        if (state.recipe.servings > 1) {
+            state.recipe.updateServings('dec');
+            recipeView.updateServingsIngredients(state.recipe);
+        }
+    }
+    if(e.target.matches(".btn-inc, .btn-inc *")){
+        //increase
+        state.recipe.updateServings('inc');
+        recipeView.updateServingsIngredients(state.recipe);
+
+
+    }
+
+})
+
+
+

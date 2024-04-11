@@ -19,5 +19,9 @@
     "webpack": "~4.44.2",
     "webpack-cli": "~3.3.12",
     "webpack-dev-server": "~3.11.0"
+  },
+  "dependencies": {
+    "fractional": "^1.0.0",
+    "fracty": "^1.0.11"
   }
 }
